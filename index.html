@@ -3,61 +3,368 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MusicSpaceSV</title>
+    <title>Cindy Rubio — Cantautora Salvadoreña</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
-            background: #0f0f0f;
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
             color: #e0e0e0;
-            line-height: 1.7;
-            padding: 40px 20px;
+            overflow-x: hidden;
         }
-        .container { max-width: 800px; margin: 0 auto; }
-        h1 { color: #fff; font-size: 2em; margin-bottom: 8px; }
-        .subtitle { color: #888; margin-bottom: 40px; }
-        .card {
-            background: #1a1a2e;
-            border-radius: 12px;
-            padding: 32px;
-            margin-bottom: 16px;
+
+        /* ===== NAV ===== */
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 100;
+            background: rgba(10,10,10,0.85); backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding: 16px 40px;
+            display: flex; justify-content: space-between; align-items: center;
         }
-        .card a {
-            display: block;
-            color: #00d4ff;
-            text-decoration: none;
-            font-size: 1.2em;
-            padding: 12px 0;
-            border-bottom: 1px solid #2a2a4e;
+        nav .logo { font-weight: 800; font-size: 1.2em; color: #fff; letter-spacing: 1px; }
+        nav .logo span { color: #c084fc; }
+        nav a { color: #999; text-decoration: none; margin-left: 28px; font-size: 0.85em; font-weight: 500; transition: .3s; }
+        nav a:hover { color: #c084fc; }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+            text-align: center;
+            padding: 120px 20px 80px;
+            background: radial-gradient(ellipse at 50% 0%, #1a0a2e 0%, #0a0a0a 70%);
+            position: relative;
         }
-        .card a:last-child { border-bottom: none; }
-        .card a:hover { color: #80eaff; }
-        .card small { display: block; color: #666; font-size: 0.85em; margin-top: 4px; }
-        .footer { margin-top: 60px; color: #555; font-size: 0.85em; text-align: center; }
+        .hero::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23c084fc" fill-opacity="0.03" d="M0,96L48,112C96,128,192,160,288,186.7C384,213,480,235,576,213.3C672,192,768,128,864,128C960,128,1056,192,1152,208C1248,224,1344,192,1392,176L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"/></svg>') no-repeat bottom; background-size: cover;
+            pointer-events: none;
+        }
+        .hero-content { position: relative; z-index: 1; max-width: 700px; }
+        .hero h1 { font-size: clamp(2.5em, 6vw, 5em); font-weight: 800; color: #fff; line-height: 1.1; margin-bottom: 8px; }
+        .hero h1 span { background: linear-gradient(135deg, #c084fc, #7c3aed); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero .subtitle { font-size: 1.1em; color: #888; margin-bottom: 12px; font-weight: 300; }
+        .hero .tagline { font-size: 0.95em; color: #c084fc; margin-bottom: 30px; font-style: italic; }
+        .hero .social-links { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+        .hero .social-links a {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 10px 24px; border-radius: 50px;
+            font-size: 0.85em; font-weight: 600; text-decoration: none;
+            transition: .3s; border: 1px solid rgba(255,255,255,0.1);
+        }
+        .btn-spotify { background: #1db954; color: #000; }
+        .btn-spotify:hover { background: #1ed760; transform: translateY(-2px); }
+        .btn-instagram { background: linear-gradient(135deg, #f58529, #dd2a7b); color: #fff; }
+        .btn-instagram:hover { transform: translateY(-2px); }
+        .btn-facebook { background: #1877f2; color: #fff; }
+        .btn-facebook:hover { transform: translateY(-2px); }
+        .btn-tiktok { background: #000; color: #fff; border-color: #333; }
+        .btn-tiktok:hover { background: #111; transform: translateY(-2px); }
+
+        /* ===== SECTION ===== */
+        section { padding: 100px 20px; max-width: 1100px; margin: 0 auto; }
+        .section-title {
+            font-size: 2em; font-weight: 700; color: #fff;
+            margin-bottom: 8px; text-align: center;
+        }
+        .section-title span { color: #c084fc; }
+        .section-sub { text-align: center; color: #666; font-size: 0.95em; margin-bottom: 50px; }
+
+        /* ===== BIO ===== */
+        .bio-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center;
+        }
+        .bio-photo {
+            width: 100%; aspect-ratio: 1; border-radius: 20px;
+            background: linear-gradient(135deg, #1a0a2e, #2d1b4e);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 5em; color: #c084fc; border: 1px solid rgba(192,132,252,0.2);
+        }
+        .bio-text h2 { font-size: 1.8em; color: #fff; margin-bottom: 16px; }
+        .bio-text p { color: #999; line-height: 1.8; margin-bottom: 16px; font-size: 0.95em; }
+        .bio-text .highlight { color: #c084fc; font-weight: 600; }
+
+        /* ===== MUSICA ===== */
+        .music-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;
+        }
+        .music-card {
+            background: #111; border-radius: 16px; padding: 24px;
+            border: 1px solid rgba(255,255,255,0.05); transition: .3s;
+        }
+        .music-card:hover { border-color: rgba(192,132,252,0.3); transform: translateY(-4px); }
+        .music-card .icon { font-size: 2em; margin-bottom: 12px; }
+        .music-card h3 { color: #fff; font-size: 1.1em; margin-bottom: 4px; }
+        .music-card p { color: #666; font-size: 0.85em; margin-bottom: 12px; }
+        .music-card .tag {
+            display: inline-block; padding: 3px 10px; border-radius: 20px;
+            font-size: 0.75em; font-weight: 600;
+            background: rgba(192,132,252,0.15); color: #c084fc;
+        }
+        .music-card .tag.gold { background: rgba(255,215,0,0.15); color: #ffd700; }
+
+        /* ===== GALERIA ===== */
+        .galeria-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+        }
+        .galeria-item {
+            aspect-ratio: 1; border-radius: 12px;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border: 1px solid rgba(255,255,255,0.05);
+            display: flex; align-items: center; justify-content: center;
+            color: #333; font-size: 3em; transition: .3s;
+        }
+        .galeria-item:hover { border-color: rgba(192,132,252,0.3); }
+
+        /* ===== EP ===== */
+        .ep-banner {
+            background: linear-gradient(135deg, #1a0a2e, #2d1b4e);
+            border-radius: 24px; padding: 48px; text-align: center;
+            border: 1px solid rgba(192,132,252,0.15);
+            margin-top: 40px;
+        }
+        .ep-banner h2 { font-size: 2em; color: #fff; margin-bottom: 8px; }
+        .ep-banner h2 span { color: #c084fc; }
+        .ep-banner p { color: #888; font-size: 1em; margin-bottom: 20px; }
+        .ep-banner .progress {
+            max-width: 400px; margin: 0 auto;
+            height: 6px; background: #222; border-radius: 10px; overflow: hidden;
+        }
+        .ep-banner .progress-bar {
+            width: 70%; height: 100%; background: linear-gradient(90deg, #c084fc, #7c3aed);
+            border-radius: 10px; animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0%,100% { opacity: 0.7; } 50% { opacity: 1; } }
+
+        /* ===== LOGROS ===== */
+        .logros-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px;
+        }
+        .logro-card {
+            background: #111; border-radius: 16px; padding: 28px;
+            border: 1px solid rgba(255,255,255,0.05); text-align: center;
+        }
+        .logro-card .emoji { font-size: 2.5em; margin-bottom: 10px; }
+        .logro-card h3 { color: #fff; font-size: 1em; margin-bottom: 4px; }
+        .logro-card p { color: #666; font-size: 0.85em; }
+
+        /* ===== CONTACTO ===== */
+        .contacto-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 30px;
+            max-width: 700px; margin: 0 auto;
+        }
+        .contacto-card {
+            background: #111; border-radius: 16px; padding: 28px;
+            border: 1px solid rgba(255,255,255,0.05); text-align: center;
+            transition: .3s;
+        }
+        .contacto-card:hover { border-color: rgba(192,132,252,0.3); }
+        .contacto-card .emoji { font-size: 2em; margin-bottom: 8px; }
+        .contacto-card h3 { color: #fff; font-size: 1em; margin-bottom: 4px; }
+        .contacto-card a { color: #c084fc; text-decoration: none; font-size: 0.9em; }
+        .contacto-card a:hover { text-decoration: underline; }
+
+        /* ===== FOOTER ===== */
+        footer {
+            text-align: center; padding: 40px 20px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            color: #444; font-size: 0.85em;
+        }
+        footer a { color: #666; text-decoration: none; }
+        footer a:hover { color: #c084fc; }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            nav { padding: 14px 20px; }
+            nav .links a { margin-left: 14px; font-size: 0.8em; }
+            .bio-grid { grid-template-columns: 1fr; }
+            .galeria-grid { grid-template-columns: repeat(2, 1fr); }
+            .contacto-grid { grid-template-columns: 1fr; }
+            section { padding: 60px 20px; }
+            .hero .social-links a { font-size: 0.8em; padding: 8px 16px; }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>MusicSpaceSV</h1>
-        <p class="subtitle">Aplicación de gestión de métricas de TikTok</p>
 
-        <div class="card">
-            <a href="privacidad.html">📄 Política de Privacidad</a>
-            <small>Última actualización: 20 de junio de 2026</small>
-            <a href="terminos.html">📋 Términos del Servicio</a>
-            <small>Última actualización: 20 de junio de 2026</small>
-        </div>
+<!-- ===== NAV ===== -->
+<nav>
+    <div class="logo">Cindy <span>Rubio</span></div>
+    <div class="links">
+        <a href="#bio">Bio</a>
+        <a href="#musica">Música</a>
+        <a href="#ep">EP</a>
+        <a href="#logros">Logros</a>
+        <a href="#contacto">Contacto</a>
+    </div>
+</nav>
 
-        <div class="card">
-            <p style="color:#888;">
-                <strong>Contacto:</strong> cindyrubiomusic@gmail.com<br>
-                <strong>TikTok:</strong> @cindyrubiomusic
-            </p>
-        </div>
-
-        <div class="footer">
-            &copy; 2026 Music Space — Cindy Rubio
+<!-- ===== HERO ===== -->
+<section class="hero">
+    <div class="hero-content">
+        <p class="subtitle">✦ Cantautora Salvadoreña</p>
+        <h1>Cindy <span>Rubio</span></h1>
+        <p class="tagline">«La música representa la cultura del país de cada persona»</p>
+        <div class="social-links">
+            <a href="https://open.spotify.com/intl-es/artist/5bssobOCrLhDxpWN5Dimn4" target="_blank" class="btn-spotify">🎵 Spotify</a>
+            <a href="https://www.instagram.com/cindyrubio__/" target="_blank" class="btn-instagram">📸 Instagram</a>
+            <a href="https://www.facebook.com/cindyrubiomusic" target="_blank" class="btn-facebook">👍 Facebook</a>
+            <a href="https://www.tiktok.com/@cindyrubiomusic" target="_blank" class="btn-tiktok">🎬 TikTok</a>
         </div>
     </div>
+</section>
+
+<!-- ===== BIO ===== -->
+<section id="bio">
+    <h2 class="section-title">✧ <span>Biografía</span></h2>
+    <p class="section-sub">Conoce más sobre Cindy Rubio</p>
+    <div class="bio-grid">
+        <div class="bio-photo">🎤</div>
+        <div class="bio-text">
+            <h2>De Santa Tecla para el mundo</h2>
+            <p>
+                Cindy Rubio es una <span class="highlight">cantautora salvadoreña</span> originaria de Santa Tecla. 
+                Inició su proceso creativo en <span class="highlight">2020</span>, durante la pandemia, 
+                cuando descubrió su talento para la composición musical.
+            </p>
+            <p>
+                Formó parte del <span class="highlight">Coro Juvenil Nacional</span> y ha aprendido a tocar 
+                múltiples instrumentos: batería, guitarra, violín, ukelele y piano. 
+                Su formación comenzó en la Fundación <span class="highlight">Más que un Juego</span>, 
+                donde encontró el impulso para vencer el miedo escénico.
+            </p>
+            <p>
+                Actualmente estudia la licenciatura en <span class="highlight">Química y Farmacia</span> 
+                en la Universidad de El Salvador, balanceando sus estudios con su carrera musical.
+            </p>
+            <p>
+                Ha lanzado seis canciones de su autoría y prepara su primer EP 
+                titulado <span class="highlight">«Pensamientos de una mente ansiosa»</span>.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- ===== MUSICA ===== -->
+<section id="musica">
+    <h2 class="section-title">♪ <span>Canciones</span></h2>
+    <p class="section-sub">Seis temas de su autoría que ya están en todas las plataformas</p>
+    <div class="music-grid">
+        <div class="music-card">
+            <div class="icon">🌾</div>
+            <h3>Pueblo</h3>
+            <p>Nominada a Artista Revelación del Año y Mejor Canción Balada — Premios Música 503</p>
+            <span class="tag">Nominada</span>
+            <span class="tag gold">★ Balada</span>
+        </div>
+        <div class="music-card">
+            <div class="icon">🛡️</div>
+            <h3>Refugio</h3>
+            <p>Ganadora en la rama de Artista Indie — Elemento 7</p>
+            <span class="tag gold">🏆 Ganadora</span>
+        </div>
+        <div class="music-card">
+            <div class="icon">🔬</div>
+            <h3>Mujer de ciencia</h3>
+            <p>Un tema que celebra el poder femenino desde la ciencia y el arte</p>
+        </div>
+        <div class="music-card">
+            <div class="icon">💔</div>
+            <h3>Narcisista</h3>
+            <p>Una balada que explora las relaciones tóxicas desde una perspectiva honesta</p>
+        </div>
+        <div class="music-card">
+            <div class="icon">🛏️</div>
+            <h3>Vender el colchón</h3>
+            <p>Un tema con un toque de humor y crítica social</p>
+        </div>
+        <div class="music-card">
+            <div class="icon">🙏</div>
+            <h3>Nada más que pedir</h3>
+            <p>Una canción de gratitud y reflexión personal</p>
+        </div>
+    </div>
+    <div style="text-align:center;margin-top:30px;">
+        <a href="https://open.spotify.com/intl-es/artist/5bssobOCrLhDxpWN5Dimn4" target="_blank" style="display:inline-flex;align-items:center;gap:8px;padding:12px 32px;background:#1db954;color:#000;border-radius:50px;text-decoration:none;font-weight:700;">🎧 Escúchame en Spotify</a>
+    </div>
+</section>
+
+<!-- ===== EP ===== -->
+<section id="ep">
+    <h2 class="section-title">💿 <span>Nuevo EP</span></h2>
+    <p class="section-sub">Próximamente</p>
+    <div class="ep-banner">
+        <h2>«<span>Pensamientos</span> de una mente ansiosa»</h2>
+        <p>5 canciones inéditas con sus videos — Julio 2026</p>
+        <div class="progress"><div class="progress-bar"></div></div>
+        <p style="margin-top:20px;font-size:0.85em;color:#666;">En preparación • Incluye especiales de Shakira, Karol G y más</p>
+    </div>
+</section>
+
+<!-- ===== LOGROS ===== -->
+<section id="logros">
+    <h2 class="section-title">⭐ <span>Logros</span></h2>
+    <p class="section-sub">Reconocimientos y hitos de su carrera</p>
+    <div class="logros-grid">
+        <div class="logro-card">
+            <div class="emoji">🏆</div>
+            <h3>Elemento 7</h3>
+            <p>Ganadora — Artista Indie con «Refugio»</p>
+        </div>
+        <div class="logro-card">
+            <div class="emoji">🌟</div>
+            <h3>Premios Música 503</h3>
+            <p>Nominada — Artista Revelación y Mejor Balada</p>
+        </div>
+        <div class="logro-card">
+            <div class="emoji">🎵</div>
+            <h3>Coro Juvenil Nacional</h3>
+            <p>Integrante durante un año</p>
+        </div>
+        <div class="logro-card">
+            <div class="emoji">🎶</div>
+            <h3>6 Canciones</h3>
+            <p>Composiciones propias publicadas</p>
+        </div>
+    </div>
+</section>
+
+<!-- ===== CONTACTO ===== -->
+<section id="contacto">
+    <h2 class="section-title">✉ <span>Contacto</span></h2>
+    <p class="section-sub">Conecta con Cindy Rubio</p>
+    <div class="contacto-grid">
+        <div class="contacto-card">
+            <div class="emoji">📧</div>
+            <h3>Email</h3>
+            <a href="mailto:cindyrubiomusic@gmail.com">cindyrubiomusic@gmail.com</a>
+        </div>
+        <div class="contacto-card">
+            <div class="emoji">🎵</div>
+            <h3>Spotify</h3>
+            <a href="https://open.spotify.com/intl-es/artist/5bssobOCrLhDxpWN5Dimn4" target="_blank">CindyRubio__</a>
+        </div>
+        <div class="contacto-card">
+            <div class="emoji">📸</div>
+            <h3>Instagram</h3>
+            <a href="https://www.instagram.com/cindyrubio__/" target="_blank">@cindyrubio__</a>
+        </div>
+        <div class="contacto-card">
+            <div class="emoji">👍</div>
+            <h3>Facebook</h3>
+            <a href="https://www.facebook.com/cindyrubiomusic" target="_blank">Cindy Rubio Music</a>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+    <p>© 2026 <a href="#">Cindy Rubio</a> — Music Space. Todos los derechos reservados.</p>
+    <p style="margin-top:8px;font-size:0.8em;">Hecho con ❤️ desde El Salvador 🇸🇻</p>
+</footer>
+
 </body>
 </html>
