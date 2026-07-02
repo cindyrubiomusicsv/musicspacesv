@@ -208,6 +208,120 @@
             background: #222; cursor: pointer; transition: .3s;
         }
         .slide-dots .dot.active { background: #c084fc; width: 28px; border-radius: 20px; }
+
+        /* ===== VIDEO CAROUSEL ===== */
+        .videos-carousel {
+            display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory;
+            padding: 8px 4px 16px; scrollbar-width: none; -ms-overflow-style: none;
+        }
+        .videos-carousel::-webkit-scrollbar { display: none; }
+        .video-card {
+            flex: 0 0 auto; scroll-snap-align: start;
+            width: 280px; border-radius: 16px; overflow: hidden;
+            background: #0d0d0d; border: 1px solid rgba(255,255,255,0.04);
+            transition: all .4s ease; cursor: pointer; position: relative;
+        }
+        .video-card:hover { border-color: rgba(192,132,252,0.2); transform: translateY(-6px); }
+        .video-thumb {
+            position: relative; width: 100%; aspect-ratio: 16/9; overflow: hidden;
+            background: #111;
+        }
+        .video-thumb img { width: 100%; height: 100%; object-fit: cover; transition: .4s; }
+        .video-card:hover .video-thumb img { transform: scale(1.05); }
+        .video-thumb .play-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(0,0,0,0.3); transition: .3s;
+        }
+        .video-thumb .play-overlay .play-icon {
+            width: 52px; height: 52px; border-radius: 50%;
+            background: rgba(192,132,252,0.9); color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.3em; transition: .3s; backdrop-filter: blur(4px);
+        }
+        .video-card:hover .play-overlay .play-icon {
+            background: #c084fc; transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(192,132,252,0.4);
+        }
+        .video-thumb .badge-type {
+            position: absolute; top: 10px; right: 10px;
+            padding: 3px 10px; border-radius: 8px;
+            font-size: 0.6em; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+            background: rgba(0,0,0,0.7); color: #c084fc; border: 1px solid rgba(192,132,252,0.2);
+            backdrop-filter: blur(4px);
+        }
+        .video-info { padding: 14px 16px 16px; }
+        .video-info h4 {
+            font-size: 0.8em; font-weight: 600; color: #fff;
+            line-height: 1.4; margin-bottom: 8px;
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+        }
+        .video-meta { display: flex; gap: 12px; font-size: 0.7em; color: #555; }
+        .video-meta span { display: flex; align-items: center; gap: 4px; }
+        .video-meta .views { color: #c084fc; }
+        .carousel-nav {
+            display: flex; justify-content: center; gap: 12px; margin-top: 20px;
+        }
+        .carousel-nav button {
+            width: 40px; height: 40px; border-radius: 50%;
+            background: #111; border: 1px solid rgba(255,255,255,0.06);
+            color: #888; font-size: 1.1em; cursor: pointer;
+            transition: .3s; display: flex; align-items: center; justify-content: center;
+        }
+        .carousel-nav button:hover { background: rgba(192,132,252,0.15); color: #c084fc; border-color: rgba(192,132,252,0.3); }
+
+        /* ===== VIDEO MODAL ===== */
+        .video-modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 9999; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
+            align-items: center; justify-content: center; padding: 20px;
+        }
+        .video-modal.active { display: flex; }
+        .video-modal-content {
+            width: 100%; max-width: 780px; border-radius: 20px; overflow: hidden;
+            background: #0d0d0d; border: 1px solid rgba(255,255,255,0.06);
+            animation: modalIn .3s ease;
+        }
+        @keyframes modalIn { from { opacity: 0; transform: scale(0.92) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+        .video-modal-content .modal-video-wrap {
+            position: relative; width: 100%; aspect-ratio: 16/9; background: #000;
+        }
+        .video-modal-content .modal-video-wrap iframe {
+            width: 100%; height: 100%; border: none;
+        }
+        .video-modal-content .modal-info {
+            padding: 18px 22px 20px; display: flex; justify-content: space-between; align-items: center;
+        }
+        .video-modal-content .modal-info h3 {
+            font-size: 0.85em; font-weight: 600; color: #fff; flex: 1; margin-right: 16px;
+        }
+        .modal-close {
+            width: 36px; height: 36px; border-radius: 50%;
+            background: rgba(255,255,255,0.06); border: none;
+            color: #888; font-size: 1.2em; cursor: pointer;
+            transition: .3s; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        }
+        .modal-close:hover { background: rgba(192,132,252,0.2); color: #c084fc; }
+        .modal-watch-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 8px 20px; border-radius: 50px;
+            font-size: 0.75em; font-weight: 600; text-decoration: none;
+            background: #c084fc; color: #000; transition: .3s;
+        }
+        .modal-watch-btn:hover { background: #a855f7; }
+
+        @media (max-width: 768px) {
+            .video-card { width: 240px; }
+            .video-modal-content .modal-info { flex-direction: column; gap: 12px; align-items: flex-start; }
+        }
+        @media (max-width: 480px) {
+            .video-card { width: 200px; }
+            .video-info { padding: 10px 12px 12px; }
+            .video-info h4 { font-size: 0.72em; }
+            .video-meta { font-size: 0.62em; gap: 8px; }
+            .video-thumb .play-overlay .play-icon { width: 40px; height: 40px; font-size: 1em; }
+        }
+
         @media (max-width: 768px) {
             .slideshow-wrapper { max-width: 100%; }
         }
@@ -302,6 +416,7 @@
 <nav id="navbar">
     <a href="#" class="logo">Cindy <span>Rubio</span></a>
     <ul class="menu" id="menu">
+        <li><a href="#videos">🎬 Videos</a></li>
         <li><a href="#bio">Bio</a></li>
         <li><a href="#musica">Música</a></li>
         <li><a href="#galeria">Galería</a></li>
@@ -331,6 +446,36 @@
     </div>
     <a href="#bio" class="scroll-down">Desliza ▼</a>
 </section>
+
+<!-- ===== VIDEOS DESTACADOS ===== -->
+<section id="videos">
+    <div class="container">
+        <div class="section-tag">🎬 Videos</div>
+        <h2 class="section-title">Lo más <span>visto</span></h2>
+        <p class="section-desc">Mis covers, análisis y shorts más populares en YouTube.</p>
+        <div class="videos-carousel" id="videoCarousel"></div>
+        <div class="carousel-nav">
+            <button onclick="scrollCarousel(-1)" aria-label="Anterior">‹</button>
+            <button onclick="scrollCarousel(1)" aria-label="Siguiente">›</button>
+        </div>
+    </div>
+</section>
+
+<!-- ===== MODAL VIDEO ===== -->
+<div class="video-modal" id="videoModal" onclick="closeModal(event)">
+    <div class="video-modal-content" onclick="event.stopPropagation()">
+        <div class="modal-video-wrap">
+            <iframe id="modalIframe" src="" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>
+        </div>
+        <div class="modal-info">
+            <h3 id="modalTitle"></h3>
+            <div style="display:flex;gap:10px;align-items:center;flex-shrink:0;">
+                <a id="modalWatchBtn" href="#" target="_blank" class="modal-watch-btn"><i class="fab fa-youtube"></i> Ver en YouTube</a>
+                <button class="modal-close" onclick="closeModalDirect()">✕</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- ===== BIO ===== -->
 <section id="bio">
@@ -534,8 +679,77 @@
 </footer>
 
 <script>
+    // ===== VIDEOS DESTACADOS =====
+    const featuredVideos = [
+        { id: "xLnthnIIhCI", title: "Did you know this about Iris? sabias esto de Iris?", views: 1324, likes: 28, published: "2026-06-12", type: 'SHORT' },
+        { id: "-MhxOck463M", title: "¿A que no sabías esto de More Than Words? 😉", views: 1247, likes: 4, published: "2026-07-01", type: 'SHORT' },
+        { id: "JFURml5opEA", title: "Ya puede ser mi cover de More than words 🥰❤️‍🩹", views: 1247, likes: 42, published: "2026-06-28", type: 'SHORT' },
+        { id: "-fseGrTYSoo", title: "ya puedes ver One of Us", views: 1094, likes: 32, published: "2026-06-16", type: 'SHORT' },
+        { id: "rC-QP-xLl7k", title: "Ya escuchaste mi cover de One of us? ❤️", views: 1064, likes: 10, published: "2026-06-19", type: 'SHORT' },
+        { id: "MfEMniYPbl8", title: "One of Us no es lo que parece...", views: 718, likes: 26, published: "2026-06-14", type: 'SHORT' },
+        { id: "diQ1h0e5P30", title: "ya puedes ver mi cover de One of Us", views: 693, likes: 11, published: "2026-06-17", type: 'SHORT' },
+        { id: "RskVaF21SF4", title: "ya puedes ver mi cover de One of Us 💕😍", views: 364, likes: 12, published: "2026-06-15", type: 'SHORT' },
+    ];
+
+    function formatViews(n) {
+        if (n >= 1000) return (n/1000).toFixed(n%1000===0?0:1).replace('.0','') + 'K';
+        return n;
+    }
+
+    function buildCarousel(videos) {
+        const container = document.getElementById('videoCarousel');
+        if (!container) return;
+        container.innerHTML = videos.map(v => `
+            <div class="video-card" onclick="openVideo('${v.id}','${v.title.replace(/'/g,"\\'")}','${v.type}')">
+                <div class="video-thumb">
+                    <img src="https://i4.ytimg.com/vi/${v.id}/hqdefault.jpg" alt="${v.title}" loading="lazy">
+                    <div class="play-overlay"><div class="play-icon">▶</div></div>
+                    <span class="badge-type">${v.type}</span>
+                </div>
+                <div class="video-info">
+                    <h4>${v.title}</h4>
+                    <div class="video-meta">
+                        <span class="views">👁 ${formatViews(v.views)}</span>
+                        <span>❤ ${v.likes}</span>
+                        <span>📅 ${v.published}</span>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function openVideo(id, title, type) {
+        const embedUrl = type === 'SHORT'
+            ? 'https://www.youtube.com/embed/' + id + '?autoplay=1&loop=1'
+            : 'https://www.youtube.com/embed/' + id + '?autoplay=1';
+        document.getElementById('modalIframe').src = embedUrl;
+        document.getElementById('modalTitle').textContent = title;
+        document.getElementById('modalWatchBtn').href = 'https://www.youtube.com/watch?v=' + id;
+        document.getElementById('videoModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(e) {
+        if (e && e.target !== e.currentTarget) return;
+        closeModalDirect();
+    }
+    function closeModalDirect() {
+        document.getElementById('videoModal').classList.remove('active');
+        document.getElementById('modalIframe').src = '';
+        document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModalDirect(); });
+
+    function scrollCarousel(dir) {
+        var el = document.getElementById('videoCarousel');
+        if (!el) return;
+        var card = el.querySelector('.video-card');
+        var step = card ? card.offsetWidth + 16 : 300;
+        el.scrollBy({ left: step * dir, behavior: 'smooth' });
+    }
+
     // Navbar scroll effect
-    window.addEventListener('scroll', () => {
+    window.addEventListener('scroll', function() {
         document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
     });
 
@@ -543,8 +757,13 @@
     function toggleMenu() {
         document.getElementById('menu').classList.toggle('open');
     }
-    document.querySelectorAll('#menu a').forEach(a => {
-        a.addEventListener('click', () => document.getElementById('menu').classList.remove('open'));
+    document.querySelectorAll('#menu a').forEach(function(a) {
+        a.addEventListener('click', function() { document.getElementById('menu').classList.remove('open'); });
+    });
+
+    // Build carousel on load
+    document.addEventListener('DOMContentLoaded', function() {
+        buildCarousel(featuredVideos);
     });
 
     // Slideshow
